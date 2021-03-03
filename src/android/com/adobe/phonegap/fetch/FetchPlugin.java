@@ -11,6 +11,7 @@ import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
 import okhttp3.Call;
+import okhttp3.brotli.BrotliInterceptor;
 
 import org.apache.cordova.CallbackContext;
 import org.apache.cordova.CordovaPlugin;
@@ -27,7 +28,10 @@ public class FetchPlugin extends CordovaPlugin {
     public static final String LOG_TAG = "FetchPlugin";
     private static CallbackContext callbackContext;
 
-    private OkHttpClient mClient = new OkHttpClient();
+    private OkHttpClient mClient = new OkHttpClient.Builder()
+	.addInterceptor( BrotliInterceptor.INSTANCE )
+        .build();
+
     public static final MediaType MEDIA_TYPE_MARKDOWN = MediaType.parse("application/x-www-form-urlencoded; charset=utf-8");
 
     private static final long DEFAULT_TIMEOUT = 10;
